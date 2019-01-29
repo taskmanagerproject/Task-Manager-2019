@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Task Manager</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="nav_drawer_settings">Settings</string>
+    <string name="nav_drawer_dashboard">Dashboard</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--<string name="app_name">HIT</string>
+
+    //Login page
+    <string name="loginpage_email">Email</string>
+    <string name="loginpage_password">Password</string>
+    <string name="loginpage_loginbutton">LOGIN</string>
+    <string name="loginpage_signuptextview">Dont have an account?? SIGN UP</string>
+
+    //Signup page
+    <string name="signuppage_firstname">First Name</string>
+    <string name="signuppage_roomno">Room No</string>
+    <string name="signuppage_email">Email</string>
+    <string name="signuppage_lastname">Last Name</string>
+    <string name="signuppage_password">Password</string>
+    <string name="signuppage_confirmpassword">Confirm Password</string>
+    <string name="signuppage_signupbutton">SIGN UP</string>
+    <string name="signuppage_logintextview">Already have an account??.. Login Now</string>
+
+
+    //HomeScreen Page
+    <string name="homescreenpage_logout_button">LOGOUT</string>
+
+
+    &lt;!&ndash; TODO: Remove or change this placeholder text &ndash;&gt;
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+
+    //Naviagtion Drawer
+    <string name="nav_drawer_workorder">Work Order</string>
+    <string name="nav_drawer_create_complaint">Create Complaint</string>
+    <string name="nav_drawer_settings">Settings</string>
+    <string name="nav_drawer_dashboard">Dashboard</string>
+    <string name="nav_drawer_logout">Work Order</string>-->
+</resources>

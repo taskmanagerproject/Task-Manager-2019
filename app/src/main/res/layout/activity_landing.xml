@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".landing.view.LandingActivity"
+    android:padding="16dp"
+    android:background="@drawable/blur"
+    tools:layout_editor_absoluteY="25dp">
+
+    <Button
+        android:id="@+id/login_button_landing"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:shadowColor="@color/colorPrimary"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="@dimen/margin_24dp"
+        android:layout_marginRight="@dimen/margin_24dp"
+        android:background="@drawable/joinorsignin"
+        android:text="SIGN IN"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:textColor="@color/light_white"
+        android:textSize="@dimen/margin_16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/joinTeam_button_landing"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        android:layout_marginLeft="@dimen/margin_24dp"
+        android:layout_marginRight="@dimen/margin_24dp"
+        android:background="@drawable/joinorsignin"
+        android:text="join  a Team"
+        android:textColor="@color/light_white"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:textSize="@dimen/margin_16dp"
+        app:layout_constraintBottom_toTopOf="@id/login_button_landing"
+
+        />
+
+    <Button
+        android:id="@+id/create_team_button"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        android:layout_marginLeft="@dimen/margin_24dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_24dp"
+        android:background="@drawable/landing_button_background"
+        android:text="CREATE A TEAM"
+        android:textSize="@dimen/margin_16dp"
+        app:layout_constraintBottom_toTopOf="@id/joinTeam_button_landing" />
+
+</android.support.constraint.ConstraintLayout>

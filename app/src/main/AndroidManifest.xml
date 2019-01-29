@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.nikhil.taskmanager">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".splash.view.SplashActivity">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity android:name=".landing.view.LandingActivity" />
+        <activity android:name=".launcher.view.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".team.view.EnterTeamNameActivity" />
+        <activity android:name=".login.view.LoginActivity" />
+        <activity android:name=".signup.view.SignUpActivity" />
+        <activity
+            android:name=".task.view.TaskActivity"
+            android:parentActivityName=".Home.view.HomescreenActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.view.HomescreenActivity" />
+        </activity>
+        <activity android:name=".Home.view.HomescreenActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Home.view.HomescreenActivity" />
+        </activity>
+        <activity android:name=".Home.view.navigationHeader"></activity>
+    </application>
+
+</manifest>
