@@ -1,5 +1,6 @@
 package com.example.nikhil.taskmanager.login.view;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import com.example.nikhil.taskmanager.Constants.AppConstant;
 import com.example.nikhil.taskmanager.Home.view.HomescreenActivity;
 import com.example.nikhil.taskmanager.R;
 import com.example.nikhil.taskmanager.base.view.BaseActivity;
+import com.example.nikhil.taskmanager.user.view.DatabaseHelper;
 import com.example.nikhil.taskmanager.util.PreferenceHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,20 +30,26 @@ public class LoginActivity extends BaseActivity {
     private Button login;
     private DatabaseReference mDatabase;
     private String mTeamName;
+    ProgressDialog mProgress;
     private static final String TAG = "LoginActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
         Intent intent = getIntent();
         mTeamName = intent.getStringExtra(AppConstant.BundleKey.TEAM_NAME);
         Log.d(TAG,"Team Name "+mTeamName);
-        setContentView(R.layout.activity_login);
+        mProgress = new ProgressDialog(LoginActivity.this);
+        mProgress.setTitle("Login.....");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
         email = findViewById(R.id.login_email);
         password = findViewById(R.id.login_password);
         login = findViewById(R.id.login_button);
         login.setOnClickListener(new View.OnClickListener() {
                 @Override
             public void onClick(View view) {
+                    mProgress.show();
                 final String mail = email.getText().toString().toLowerCase();
                 final String pass = password.getText().toString();
                 Log.d(TAG, "email id : " + mail);
@@ -55,6 +64,8 @@ public class LoginActivity extends BaseActivity {
                         Log.d(TAG,"Login values "+dataSnapshot.child("password").getValue().toString());*/
                         if (dataSnapshot.getValue() != null && dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(mail)
                                 && dataSnapshot.child("password").getValue().toString().equals(pass)) {
+                            mProgress.setMessage("Login Done Successfully!!");
+                            mProgress.dismiss();
                             //Navigate to home screen
                             Log.d(TAG,"Login values "+mail);
                             Log.d(TAG,"Login values "+pass);

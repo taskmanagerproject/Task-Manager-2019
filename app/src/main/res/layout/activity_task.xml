@@ -99,12 +99,21 @@
         android:layout_marginBottom="@dimen/margin_16dp"
         app:layout_constraintTop_toBottomOf="@id/priorityRadio"
         android:id="@+id/Assign">
-        <android.support.design.widget.TextInputEditText
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ems="10"
+            android:dropDownWidth="match_parent"
+            android:completionThreshold="1"
+            android:dropDownHeight="400dp"
             android:id="@+id/create_task_assign"
             android:hint="Assign To"
             />
+            <requestFocus/>
+        </RelativeLayout>
     </android.support.design.widget.TextInputLayout>
     <Button
         android:layout_width="match_parent"

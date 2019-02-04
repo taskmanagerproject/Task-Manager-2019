@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 import android.webkit.WebView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,17 +28,23 @@ import com.example.nikhil.taskmanager.R;
 import com.example.nikhil.taskmanager.base.view.BaseActivity;
 import com.example.nikhil.taskmanager.model.Tasks;
 import com.example.nikhil.taskmanager.model.Teams;
+import com.example.nikhil.taskmanager.model.Users;
 import com.example.nikhil.taskmanager.signup.view.SignUpActivity;
+import com.example.nikhil.taskmanager.user.view.DatabaseHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Array;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,12 +53,16 @@ import butterknife.OnClick;
 public class TaskActivity extends BaseActivity {
     RadioGroup priority;
     private DatabaseReference mDatabase;
-    TextInputEditText title,description,assignTo;
+    TextInputEditText title,description;
+    AutoCompleteTextView assignTo;
     @BindView(R.id.create_task_btn)
     Button createTask;
     private android.support.v7.widget.Toolbar toolbar;
     ConstraintLayout mConstraintLayout;
 
+    private static final String[] COUNTRIES = new String[] {
+            "Belgium","Belgam","Bellam", "France Belgium", "Italy", "Germany", "Spain"
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +78,12 @@ public class TaskActivity extends BaseActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.arrow_back);
         priority = findViewById(R.id.priorityRadio);
-        String value;
+        DatabaseHelper helper = new DatabaseHelper(TaskActivity.this);
+        ArrayList<String> allNames = helper.getAllNames();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(TaskActivity.this,
+                android.R.layout.select_dialog_item,allNames);
+        assignTo.setAdapter(adapter);
+
         priority.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {

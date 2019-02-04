@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".landing.view.LandingActivity"
     android:padding="16dp"
-    android:background="@drawable/blur"
+    android:background="@color/colorPrimary"
     tools:layout_editor_absoluteY="25dp">
+
 
     <Button
         android:id="@+id/login_button_landing"
@@ -54,5 +55,6 @@
         android:text="CREATE A TEAM"
         android:textSize="@dimen/margin_16dp"
         app:layout_constraintBottom_toTopOf="@id/joinTeam_button_landing" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -1,10 +1,13 @@
 package com.example.nikhil.taskmanager.landing.view;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.nikhil.taskmanager.base.view.BaseActivity;
 import com.example.nikhil.taskmanager.R;
@@ -14,7 +17,6 @@ import com.example.nikhil.taskmanager.util.PreferenceHelper;
 public class LandingActivity extends BaseActivity {
 
     Button signIn,createTeam,joinTeam;
-    PreferenceHelper preferenceHelper;
     Intent intent1,intent2,intent3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

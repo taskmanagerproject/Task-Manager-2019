@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.nikhil.taskmanager.Constants.AppConstant;
+import com.example.nikhil.taskmanager.base.view.BaseActivity;
 import com.example.nikhil.taskmanager.login.view.LoginActivity;
 import com.example.nikhil.taskmanager.R;
 import com.example.nikhil.taskmanager.signup.view.SignUpActivity;
@@ -21,7 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class EnterTeamNameActivity extends AppCompatActivity {
+public class EnterTeamNameActivity extends BaseActivity {
     String RecievedTextFromIntent;
     Button NextBtn;
     EditText team_name;
@@ -109,6 +110,7 @@ public class EnterTeamNameActivity extends AppCompatActivity {
                                 else if(dataSnapshot.getValue() != null){
                                     Intent loginIntent = new Intent(EnterTeamNameActivity.this, LoginActivity.class);
                                     loginIntent.putExtra(AppConstant.BundleKey.TEAM_NAME, teamName);
+                                    mPreferenceHelper.putString("team_name",teamName);
                                     startActivity(loginIntent);
                                 } else {
                                     Toast.makeText(EnterTeamNameActivity.this,"Team Does not Exist",Toast.LENGTH_LONG).show();
@@ -125,5 +127,10 @@ public class EnterTeamNameActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void init() {
+
     }
 }
