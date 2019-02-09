@@ -3,15 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/users_fragment"
+    android:paddingBottom="@dimen/margin_24dp"
     tools:context=".Home.view.UsersFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/recy_view_users"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     </android.support.v7.widget.RecyclerView>
 
 

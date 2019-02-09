@@ -1,12 +1,8 @@
 package com.example.nikhil.taskmanager.model;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Users {
     private String teamName;
-    private String  fullName;
+    private String fullName;
     private String  email;
     private String  password;
 

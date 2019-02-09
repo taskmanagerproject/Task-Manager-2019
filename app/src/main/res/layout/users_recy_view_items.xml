@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/margin_24dp"
-    android:layout_height="match_parent">
+    >
+
+
+    <ImageView
+        android:id="@+id/usersImage"
+        android:layout_width="61dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="-8dp"
+        android:background="@drawable/img"
+        android:foregroundGravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
         android:id="@+id/usersName"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="24dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/usersImage"
+        android:gravity="center"
+        android:text="@string/app_name"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="E-Mail"
+        android:layout_marginTop="@dimen/margin_8dp"
+        app:layout_constraintLeft_toRightOf="@id/usersImage"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/usersName"
+        android:id="@+id/usersEmail"
+        />
 
 </android.support.constraint.ConstraintLayout>

@@ -3,74 +3,97 @@ package com.example.nikhil.taskmanager.Home.view;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.nikhil.taskmanager.Constants.AppConstant;
 import com.example.nikhil.taskmanager.R;
 import com.example.nikhil.taskmanager.UsersAdapter;
+import com.example.nikhil.taskmanager.UsersFragmentAdapter;
+import com.example.nikhil.taskmanager.base.view.BaseFragment;
+import com.example.nikhil.taskmanager.model.Users;
+import com.example.nikhil.taskmanager.user.view.DatabaseHelper;
+import com.firebase.ui.database.FirebaseListOptions;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerAdapter_LifecycleAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-/**
- * to handle interaction events.
- * Use the {@link UsersFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class UsersFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class UsersFragment extends BaseFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "UserFragment";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public String teamName,key;
     protected RecyclerView usersRecyclerView;
+    FirebaseRecyclerOptions options;
+    private DatabaseReference mUsersDatabase,UsersFromDB;
+    List<Users> data = new ArrayList<Users>();
+    UsersAdapter adapter;
+    Context context;
 
     public UsersFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UsersFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UsersFragment newInstance(String param1, String param2) {
-        UsersFragment fragment = new UsersFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        mUsersDatabase = FirebaseDatabase.getInstance().getReference();
+        UsersFromDB = mUsersDatabase.child("Users");
+        UsersFromDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    key = dataSnapshot1.getKey();
+                    String teamNameFrmSnapshot = key.substring(0,key.indexOf("_"));
+                    if(teamNameFrmSnapshot.equals(AppConstant.BundleKey.nameOfTeam)){
+                        Users users = dataSnapshot1.getValue(Users.class);
+                        data.add(users);
+                    }
+                }
+                adapter = new UsersAdapter(context,data);
+                usersRecyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void init() {
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_users, container, false);
+        context = getActivity();
         usersRecyclerView = rootView.findViewById(R.id.recy_view_users);
-        usersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        HomescreenActivity obj = new HomescreenActivity();
-        UsersAdapter adapter = new UsersAdapter(getContext(),obj.data1);
-        usersRecyclerView.setAdapter(adapter);
+        usersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return rootView;
     }
-
 }
+

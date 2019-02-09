@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.nikhil.taskmanager.Constants.AppConstant;
+import com.example.nikhil.taskmanager.Home.view.HomescreenActivity;
 import com.example.nikhil.taskmanager.base.view.BaseActivity;
 import com.example.nikhil.taskmanager.login.view.LoginActivity;
 import com.example.nikhil.taskmanager.R;
@@ -87,6 +88,7 @@ public class EnterTeamNameActivity extends BaseActivity {
                                 else if(dataSnapshot.getValue() !=null){
                                     Intent joinIntent = new Intent(EnterTeamNameActivity.this, SignUpActivity.class);
                                     joinIntent.putExtra("click","Join");
+                                    joinIntent.putExtra(AppConstant.BundleKey.TEAM_NAME,teamName);
                                     startActivity(joinIntent);
                                 }
                                 else{

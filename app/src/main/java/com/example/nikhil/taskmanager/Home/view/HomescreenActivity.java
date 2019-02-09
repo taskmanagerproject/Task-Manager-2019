@@ -12,16 +12,22 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.nikhil.taskmanager.Constants.AppConstant;
 import com.example.nikhil.taskmanager.R;
+import com.example.nikhil.taskmanager.UsersFragmentAdapter;
 import com.example.nikhil.taskmanager.base.view.BaseActivity;
 import com.example.nikhil.taskmanager.landing.view.LandingActivity;
+import com.example.nikhil.taskmanager.model.Tasks;
 import com.example.nikhil.taskmanager.model.Users;
 import com.example.nikhil.taskmanager.user.view.DatabaseHelper;
+import com.firebase.ui.database.FirebaseListOptions;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,31 +43,21 @@ public class HomescreenActivity extends BaseActivity {
     private android.support.v7.widget.Toolbar toolbar;
     private MenuItem myTask;
     private DatabaseReference mDatabase;
+    public String mFullName,key;
     TextView fullname,email;
     ImageView profileImg;
-    protected RecyclerView mRecy_view,recy_users;
-    public List<Users> data1;
+    public List<Users> getData;
+    private List<Tasks> getTasksData = new ArrayList<>();
+
 
     private static final String TAG = "HomescreenActivity";
-    /*private List<Product> getData(){
-        List<Product> data=new ArrayList<>();
-        Product p1=new Product();
-        p1.setName("Television");
-        p1.setUnitPrice(90);
-        data.add(p1);
-        Product p2=new Product();
-        p2.setName("Refrigerator");
-        p2.setUnitPrice(80);
-        data.add(p2);
-        return data;
-    }*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homescreen);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mRecy_view = findViewById(R.id.allTaskRecyView);
         View usersFragment = findViewById(R.id.users_fragment);
         Log.d(TAG,"ID OF RECY "+R.id.recy_view_users);
         /*recy_users = usersFragment.findViewById(R.id.recy_view_users);
@@ -70,6 +66,12 @@ public class HomescreenActivity extends BaseActivity {
         /*mRecy_view.setLayoutManager(new LinearLayoutManager(this));*/
         /*MyAdapter adapter=new MyAdapter(HomescreenActivity.this,getData());
         mRecy_view.setAdapter(adapter);*/
+        Bundle bundle = new Bundle();
+        bundle.putString("teamname",mPreferenceHelper.getString("team_name",""));
+        AppConstant.BundleKey.nameOfTeam = mPreferenceHelper.getString("team_name","");
+        UsersFragment fragment = new UsersFragment();
+        fragment.setArguments(bundle);
+        Log.d(TAG,"Status is a "+bundle);
         Intent intent = new Intent(HomescreenActivity.this,navigationHeader.class);
         toolbar = findViewById(R.id.toolbar);
         myTask = findViewById(R.id.nav_mytask);
@@ -78,7 +80,7 @@ public class HomescreenActivity extends BaseActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_dehaze_black_24dp);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(HomescreenActivity.this, mDrawerLayout, toolbar,R.string.nav_drawer_settings,R.string.nav_drawer_dashboard);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(HomescreenActivity.this, mDrawerLayout, toolbar,R.string.open,R.string.close);
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         String name = mPreferenceHelper.getString("full_name","");
@@ -90,41 +92,24 @@ public class HomescreenActivity extends BaseActivity {
         profileImg = header.findViewById(R.id.profile_pic);
         fullname.setText(mPreferenceHelper.getString("full_name",""));
         email.setText(mPreferenceHelper.getString("e-mail",""));
-        DatabaseHelper helper = new DatabaseHelper(HomescreenActivity.this);
-        DatabaseReference UsersFromDB = mDatabase.child("Users");
-        data1 = new ArrayList<>();
-        UsersFromDB.addListenerForSingleValueEvent(new ValueEventListener() {
+        //DatabaseHelper helper = new DatabaseHelper(HomescreenActivity.this);
+        //DatabaseReference UsersFromDB = mDatabase.child("Users");
+        DatabaseReference UsersDB = mDatabase.child("Users");
+        final DatabaseHelper helper = new DatabaseHelper(HomescreenActivity.this);
+        helper.delete_user();
+        UsersDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                /*if(dataSnapshot.child("teamName").equals(mPreferenceHelper.getString("team_name","")))
-                {
-                    user_data.add(dataSnapshot.child("fullName").toString());
-                }*/
-                if (dataSnapshot.getValue()!=null){
                 for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-
-                    String Key = dataSnapshot1.getKey();
-                    String teamNameFrmSnapshot = Key.substring(0,Key.indexOf("_"));
-                    Log.d(TAG,"Team name in home Screen "+mPreferenceHelper.getString("team_name",""));
-                    Log.d(TAG,"Check "+teamNameFrmSnapshot.equalsIgnoreCase(mPreferenceHelper.getString("team_name","")));
-                    if(teamNameFrmSnapshot.equalsIgnoreCase(mPreferenceHelper.getString("team_name",""))){
-                        DatabaseHelper helper = new DatabaseHelper(HomescreenActivity.this);
-                        Users users = new Users();
-                        Log.d(TAG,"Value changed "+dataSnapshot1.child("email").getValue().toString());
-                        users.setEmail( dataSnapshot1.child("email").getValue().toString());
-                        users.setFullName(dataSnapshot1.child("fullName").getValue().toString());
-                        users.setPassword( dataSnapshot1.child("password").getValue().toString());
-                        users.setTeamName( dataSnapshot1.child("teamName").getValue().toString());
-                        users.setUsername( dataSnapshot1.child("username").getValue().toString());
-                        data1.add(users);
-                        Log.d(TAG,"Value of user in home "+data1.toString());
+                    key = dataSnapshot1.getKey();
+                    String teamNameFromSnapshot = key.substring(0,key.indexOf("_"));
+                    if(teamNameFromSnapshot.equals(mPreferenceHelper.getString("team_name",""))){
+                        Users users = dataSnapshot1.getValue(Users.class);
+                        Log.d(TAG,"Team names are "+dataSnapshot1.child("teamName").getValue().toString());
                         helper.insert_user(users);
+                        Log.d(TAG,"Emails names are "+dataSnapshot1.child("email").getValue().toString());
                     }
-                    Log.d(TAG,"teamNameFrmSnapshot "+teamNameFrmSnapshot);
                 }
-                }
-
-
             }
 
             @Override
@@ -132,9 +117,45 @@ public class HomescreenActivity extends BaseActivity {
 
             }
         });
-        /*DatabaseReference UsersDB = mDatabase.child("Users").child(mPreferenceHelper.getString("team_name ","") + "_" + mPreferenceHelper.getString("e-mail","").substring(0, mPreferenceHelper.getString("e-mail","").indexOf("@")).toLowerCase());
-        */DatabaseReference UsersDB = mDatabase.child("Users");
+
+       /* FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<Users>()
+                .setQuery(UsersDB, Users.class)
+                .build();
+        final List<Users> data = new ArrayList<>();
         UsersDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    key = dataSnapshot1.getKey();
+                    Log.d(TAG,"On Data Changed "+dataSnapshot1);
+                    String teamNameFrmSnapshot = key.substring(0,key.indexOf("_"));
+                    if(teamNameFrmSnapshot.equals(mPreferenceHelper.getString("team_name",""))){
+                        Users users = dataSnapshot1.getValue(Users.class);
+                        Log.d(TAG,"Names are a "+dataSnapshot1.child("fullName").getValue().toString());
+                        data.add(users);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        UsersFragmentAdapter adapter = new UsersFragmentAdapter(options,this,data);
+        View view = LayoutInflater.from(this).inflate(R.layout.fragment_users,null);
+        View rootView = view.getRootView();
+
+        RecyclerView recyclerView = rootView.findViewById(R.id.recy_view_users);
+        Log.d(TAG,"Recycler view ID "+recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();*/
+
+
+        /*DatabaseReference UsersDB = mDatabase.child("Users").child(mPreferenceHelper.getString("team_name ","") + "_" + mPreferenceHelper.getString("e-mail","").substring(0, mPreferenceHelper.getString("e-mail","").indexOf("@")).toLowerCase());
+        */
+       /* UsersDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.d(TAG,"DataSnapshot is "+dataSnapshot);
@@ -147,10 +168,47 @@ public class HomescreenActivity extends BaseActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
-        Log.d(TAG,"Database Table find :"+UsersDB.getKey());
+        });*/
+        //Log.d(TAG,"Database Table find :"+UsersDB.getKey());
         /*Users users = new Users();
         users.setEmail(UsersDB);*/
+
+        final List<Tasks> allTaskList = new ArrayList<>();
+        final List<Tasks> myTaskList  = new ArrayList<>();
+        DatabaseReference tasks = mDatabase.child("Tasks");
+        helper.delete_task();
+        tasks.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    String doc_id = dataSnapshot1.getKey();
+                    String teamNameFromSnapshotOfTask = doc_id.substring(doc_id.indexOf("_")+1);
+                    if(teamNameFromSnapshotOfTask.equals(mPreferenceHelper.getString("team_name",""))){
+                        Tasks task = dataSnapshot1.getValue(Tasks.class);
+                        allTaskList.add(task);
+                        helper.insert_task(task);
+                        String assignMembers = dataSnapshot1.child("assignTo").getValue().toString();
+                        String taskEmail = mPreferenceHelper.getString("e-mail","");
+                        AppConstant.BundleKey.EMAIL = taskEmail;
+                        Log.d(TAG,"Check in Task Assign To "+assignMembers);
+                        Log.d(TAG,"Check in Task Team Name "+taskEmail);
+                        Log.d(TAG,"Check in Task "+assignMembers.contains(taskEmail));
+                        if(assignMembers.contains(taskEmail)){
+                            myTaskList.add(task);
+                        }
+                    }
+                }
+                Log.d(TAG,"Task List "+allTaskList);
+                Log.d(TAG,"Task List "+myTaskList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         MyTaskFragment Fragment = new MyTaskFragment();
         setTitle("My Task");
         addFragment(Fragment);
@@ -166,13 +224,11 @@ public class HomescreenActivity extends BaseActivity {
                         if(id == R.id.nav_alltask){
                             setTitle("All Task");
                             AllTaskFragment allTaskFragment= new AllTaskFragment();
-                            FragmentManager fragmentManager=getSupportFragmentManager();
                             replaceFragment(allTaskFragment);
                         }
                         else if(id == R.id.nav_mytask){
                             setTitle("My Task");
                             MyTaskFragment myTaskFragment= new MyTaskFragment();
-                            FragmentManager fragmentManager=getSupportFragmentManager();
                             replaceFragment(myTaskFragment);
 
                         }
@@ -188,7 +244,6 @@ public class HomescreenActivity extends BaseActivity {
                         }
                         else if(id == R.id.nav_setting){
                             setTitle("Settings");
-                            replaceFragment(null);
                         }
                         else if(id == R.id.nav_logout){
                             mPreferenceHelper.putBoolean("is_Login",false);
@@ -196,12 +251,9 @@ public class HomescreenActivity extends BaseActivity {
                             startActivity(intent);
                         }
                         Log.d("Itemid","Selected ID:"+id);
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        mDrawerLayout.closeDrawers();
+                        mDrawerLayout.closeDrawer(GravityCompat.START);
 
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
+                        menuItem.setChecked(true);
 
                         return true;
                     }

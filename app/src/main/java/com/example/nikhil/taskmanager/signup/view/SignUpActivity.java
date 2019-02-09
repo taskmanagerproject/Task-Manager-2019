@@ -107,6 +107,7 @@ public class SignUpActivity extends BaseActivity {
                                     Log.d(TAG, "On Success");
                                     Intent intent = new Intent(SignUpActivity.this, HomescreenActivity.class);
                                     mPreferenceHelper.putString("full_name",fullName);
+                                    mPreferenceHelper.putString("team_name",teamName);
                                     mPreferenceHelper.putString("e-mail",email);
                                     startActivity(intent);
                                 }

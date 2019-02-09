@@ -3,6 +3,7 @@ package com.example.nikhil.taskmanager;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,15 @@ import com.example.nikhil.taskmanager.model.Users;
 
 import java.util.List;
 
+import static android.support.constraint.Constraints.TAG;
+
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder> {
     protected Context mContext;
     private List<Users> mData;
     public UsersAdapter(Context context, List<Users> data){
-        mContext = context;
-        mData = data;
+        this.mContext = context;
+        this.mData = data;
+        Log.d(TAG,"Data is"+mData);
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -26,20 +30,26 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(MyViewHolder myViewHolder, int i) {
         Users u = mData.get(i);
-        myViewHolder.textView1.setText(u.getFullName());
+        Log.d(TAG,"Value position "+i);
+        Log.d(TAG,"Full Name is "+u.getFullName());
+        myViewHolder.mName.setText("\n" +u.getFullName());
+        myViewHolder.mEmail.setText(u.getEmail());
+        /*int clickedPosition=myViewHolder.getAdapterPosition();
+        notifyItemChanged(clickedPosition);*/
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView textView1;
+        TextView mEmail,mName;
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView1=itemView.findViewById(R.id.usersName);
+            mName = itemView.findViewById(R.id.usersName);
+            mEmail=itemView.findViewById(R.id.usersEmail);
         }
     }
 

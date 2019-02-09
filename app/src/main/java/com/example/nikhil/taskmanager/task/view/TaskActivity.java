@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -51,18 +53,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class TaskActivity extends BaseActivity {
+    private static final String TAG = "Task Activity";
+    String email = "",teamName;
     RadioGroup priority;
     private DatabaseReference mDatabase;
     TextInputEditText title,description;
-    AutoCompleteTextView assignTo;
+    MultiAutoCompleteTextView assignTo;
     @BindView(R.id.create_task_btn)
     Button createTask;
     private android.support.v7.widget.Toolbar toolbar;
     ConstraintLayout mConstraintLayout;
-
-    private static final String[] COUNTRIES = new String[] {
-            "Belgium","Belgam","Bellam", "France Belgium", "Italy", "Germany", "Spain"
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +80,13 @@ public class TaskActivity extends BaseActivity {
         priority = findViewById(R.id.priorityRadio);
         DatabaseHelper helper = new DatabaseHelper(TaskActivity.this);
         ArrayList<String> allNames = helper.getAllNames();
+        Log.d(TAG,"Allnames are"+allNames);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(TaskActivity.this,
-                android.R.layout.select_dialog_item,allNames);
+                android.R.layout.simple_dropdown_item_1line,allNames);
+
         assignTo.setAdapter(adapter);
+        assignTo.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
 
         priority.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -102,38 +106,48 @@ public class TaskActivity extends BaseActivity {
 
     @OnClick(R.id.create_task_btn)
     public void Onclick(){
-        String time= String.valueOf(System.currentTimeMillis());
-        Date d = new Date();
-        String email = "",teamName;
-        email = mPreferenceHelper.getString("e-mail","");
-        teamName = mPreferenceHelper.getString("team_name","");
-        Log.d("Task Activity","Value of email "+email);
-        String date = DateFormat.format("MMMM d, yyyy ", d.getTime()).toString();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        Tasks tasks = new Tasks();
-        tasks.setID(time);
-        tasks.setTitle(title.getText().toString());
-        tasks.setDescription(description.getText().toString());
-        tasks.setPriority(AppConstant.BundleKey.Priority);
-        tasks.setAssignTo("Nikhil");
-        tasks.setCreator(email);
-        tasks.setDate_of_creator(time);
-        mDatabase.child("Tasks").child(time+"_"+teamName).setValue(tasks)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("ds", "On Success");
-                        Toast.makeText(getApplicationContext(),"Data success",Toast.LENGTH_LONG).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("", "On Failure" + e.toString());
-                        Toast.makeText(getApplicationContext(),"Data fail",Toast.LENGTH_LONG).show();
-                    }
-                });
-        Toast.makeText(this,"Clicked",Toast.LENGTH_LONG).show();
+        if(TextUtils.isEmpty(title.getText().toString())){
+            Toast.makeText(TaskActivity.this,"Title is Empty!",Toast.LENGTH_LONG).show();
+        }
+        else if(TextUtils.isEmpty(description.getText().toString())){
+            Toast.makeText(TaskActivity.this,"Description is Empty!",Toast.LENGTH_LONG).show();
+        }
+        else if(TextUtils.isEmpty(assignTo.getText().toString())){
+            Toast.makeText(TaskActivity.this,"Please Assign a Task",Toast.LENGTH_LONG).show();
+        }
+        else{
+            String time= String.valueOf(System.currentTimeMillis());
+            Date d = new Date();
+            email = mPreferenceHelper.getString("e-mail","");
+            teamName = mPreferenceHelper.getString("team_name","");
+            Log.d("Task Activity","Value of email "+email);
+            String date = DateFormat.format("MMMM d, yyyy ", d.getTime()).toString();
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            Tasks tasks = new Tasks();
+            tasks.setID(time);
+            tasks.setTitle(title.getText().toString());
+            tasks.setDescription(description.getText().toString());
+            tasks.setPriority(AppConstant.BundleKey.Priority);
+            tasks.setAssignTo(assignTo.getText().toString());
+            tasks.setCreator(email);
+            tasks.setDate_of_creator(time);
+            mDatabase.child("Tasks").child(time+"_"+teamName).setValue(tasks)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("ds", "On Success");
+                            Toast.makeText(getApplicationContext(),"Data success",Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("", "On Failure" + e.toString());
+                            Toast.makeText(getApplicationContext(),"Data fail",Toast.LENGTH_LONG).show();
+                        }
+                    });
+            Toast.makeText(this,"Clicked",Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

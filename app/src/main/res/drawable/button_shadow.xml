@@ -2,23 +2,52 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <layer-list>
-            <item android:right="4dp" android:top="4dp">
+            <item android:right="0dp" android:top="0dp">
                 <shape>
-                    <corners android:radius="4dp" />
+                    <corners android:radius="56dp" />
                     <solid android:color="#2196f3" />
                 </shape>
             </item>
             <item android:bottom="2dp" android:left="2dp">
                 <shape>
-                    <gradient android:angle="270"
+                    <gradient android:angle="0"
                         android:endColor="#64b5f6" android:startColor="#42a5f5" />
                     <stroke android:width="2dp" android:color="#42a5f5" />
-                    <corners android:radius="4dp" />
-                    <padding android:bottom="8dp" android:left="8dp"
-                        android:right="8dp" android:top="8dp" />
+                    <corners
+                        android:radius="56dp"
+                        android:bottomLeftRadius="32dp"
+                        android:bottomRightRadius="32dp"
+                        android:topLeftRadius="32dp"
+                        android:topRightRadius="32dp"
+                        />
+                    <padding android:bottom="0dp" android:left="0dp"
+                        android:right="0dp" android:top="0dp" />
+                    <solid android:color="#42a5f5"/>
+                    <size
+                        android:height="56dp"
+                        android:width="56dp"/>
                 </shape>
             </item>
         </layer-list>
     </item>
-
+    <!--<item>
+    <shape>
+        <gradient android:angle="0"
+            android:endColor="#64b5f6" android:startColor="#42a5f5" />
+        <stroke android:width="2dp" android:color="#42a5f5" />
+        <corners
+            android:radius="56dp"
+            android:bottomLeftRadius="32dp"
+            android:bottomRightRadius="32dp"
+            android:topLeftRadius="32dp"
+            android:topRightRadius="32dp"
+            />
+        <padding android:bottom="0dp" android:left="0dp"
+            android:right="0dp" android:top="0dp" />
+        <solid android:color="#42a5f5"/>
+        <size
+            android:height="56dp"
+            android:width="56dp"/>
+    </shape>
+    </item>-->
 </selector>
