@@ -40,9 +40,7 @@ public class LoginActivity extends BaseActivity {
         mTeamName = intent.getStringExtra(AppConstant.BundleKey.TEAM_NAME);
         Log.d(TAG,"Team Name "+mTeamName);
         mProgress = new ProgressDialog(LoginActivity.this);
-        mProgress.setTitle("Login.....");
-        mProgress.setCancelable(false);
-        mProgress.setIndeterminate(true);
+
         email = findViewById(R.id.login_email);
         password = findViewById(R.id.login_password);
         login = findViewById(R.id.login_button);
@@ -64,6 +62,9 @@ public class LoginActivity extends BaseActivity {
                         Log.d(TAG,"Login values "+dataSnapshot.child("password").getValue().toString());*/
                         if (dataSnapshot.getValue() != null && dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(mail)
                                 && dataSnapshot.child("password").getValue().toString().equals(pass)) {
+                            mProgress.setTitle("Login.....");
+                            mProgress.setCancelable(false);
+                            mProgress.setIndeterminate(true);
                             mProgress.setMessage("Login Done Successfully!!");
                             mProgress.dismiss();
                             //Navigate to home screen

@@ -102,7 +102,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <MultiAutoCompleteTextView
+        <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -115,9 +115,13 @@
             <requestFocus/>
         </RelativeLayout>
     </android.support.design.widget.TextInputLayout>
-    <Button
+    <android.support.design.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_16dp"
+        android:textColor="@color/light_white"
+        app:cornerRadius="@dimen/margin_8dp"
+        android:textSize="16sp"
         android:text="Create Task"
         android:id="@+id/create_task_btn"
         app:layout_constraintLeft_toLeftOf="parent"

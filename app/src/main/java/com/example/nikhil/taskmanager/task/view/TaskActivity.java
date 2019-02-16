@@ -58,7 +58,7 @@ public class TaskActivity extends BaseActivity {
     RadioGroup priority;
     private DatabaseReference mDatabase;
     TextInputEditText title,description;
-    MultiAutoCompleteTextView assignTo;
+    AutoCompleteTextView assignTo;
     @BindView(R.id.create_task_btn)
     Button createTask;
     private android.support.v7.widget.Toolbar toolbar;
@@ -85,7 +85,6 @@ public class TaskActivity extends BaseActivity {
                 android.R.layout.simple_dropdown_item_1line,allNames);
 
         assignTo.setAdapter(adapter);
-        assignTo.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
 
         priority.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

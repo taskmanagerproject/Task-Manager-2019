@@ -6,40 +6,36 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.nikhil.taskmanager.AllTaskAdapter;
+import com.example.nikhil.taskmanager.Constants.AppConstant;
+import com.example.nikhil.taskmanager.MyTaskAdapter;
 import com.example.nikhil.taskmanager.R;
 import com.example.nikhil.taskmanager.base.view.BaseFragment;
+import com.example.nikhil.taskmanager.model.Tasks;
 import com.example.nikhil.taskmanager.task.view.TaskActivity;
+import com.example.nikhil.taskmanager.user.view.DatabaseHelper;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MyTaskFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MyTaskFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MyTaskFragment extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    @BindView(R.id.FloatingPlusBtnMyTask)
-    Button myTaskFragment;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
 
+    private static final String TAG ="In My task" ;
+    private RecyclerView mRecyclerView;
+    Context context;
+    private MyTaskAdapter adapter;
     public MyTaskFragment() {
         // Required empty public constructor
     }
@@ -47,10 +43,8 @@ public class MyTaskFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+
     }
 
     @Override
@@ -58,6 +52,16 @@ public class MyTaskFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_task, container, false);
+        context  = getActivity();
+        mRecyclerView = view.findViewById(R.id.myTaskRecyView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        Log.d(TAG,"In my task fragment on create view");
+        DatabaseHelper helper = new DatabaseHelper(getActivity());
+        Log.d(TAG,"In my task fragment on create");
+        Log.d(TAG,"email is "+AppConstant.BundleKey.EMAIL);
+        List<Tasks> data = helper.getMyTasks(AppConstant.BundleKey.EMAIL);
+        adapter = new MyTaskAdapter(context,data);
+        mRecyclerView.setAdapter(adapter);
         ButterKnife.bind(this, view);
         return view;
     }

@@ -2,6 +2,7 @@ package com.example.nikhil.taskmanager;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
         Users u = mData.get(i);
         Log.d(TAG,"Value position "+i);
         Log.d(TAG,"Full Name is "+u.getFullName());
-        myViewHolder.mName.setText("\n" +u.getFullName());
+        myViewHolder.mName.setText(u.getFullName());
         myViewHolder.mEmail.setText(u.getEmail());
         /*int clickedPosition=myViewHolder.getAdapterPosition();
         notifyItemChanged(clickedPosition);*/
@@ -46,10 +47,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mEmail,mName;
+        ConstraintLayout mConstraintLayout;
         public MyViewHolder(View itemView) {
             super(itemView);
             mName = itemView.findViewById(R.id.usersName);
             mEmail=itemView.findViewById(R.id.usersEmail);
+            mConstraintLayout = itemView.findViewById(R.id.constraint_layout);
         }
     }
 

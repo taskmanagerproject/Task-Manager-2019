@@ -20,8 +20,6 @@
 
         android:startColor="#FFF"
 
-        android:endColor="#0000FF"
-
         android:type="linear"
 
         />

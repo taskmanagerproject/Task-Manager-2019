@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.nikhil.taskmanager.Constants.AppConstant;
 import com.example.nikhil.taskmanager.R;
+import com.example.nikhil.taskmanager.SimpleDividerItemDecoration;
 import com.example.nikhil.taskmanager.UsersAdapter;
 import com.example.nikhil.taskmanager.UsersFragmentAdapter;
 import com.example.nikhil.taskmanager.base.view.BaseFragment;
@@ -56,7 +58,7 @@ public class UsersFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mUsersDatabase = FirebaseDatabase.getInstance().getReference();
+        /*mUsersDatabase = FirebaseDatabase.getInstance().getReference();
         UsersFromDB = mUsersDatabase.child("Users");
         UsersFromDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -77,7 +79,8 @@ public class UsersFragment extends BaseFragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
+
     }
 
     @Override
@@ -93,7 +96,30 @@ public class UsersFragment extends BaseFragment {
         context = getActivity();
         usersRecyclerView = rootView.findViewById(R.id.recy_view_users);
         usersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        usersRecyclerView.addItemDecoration(new
+                DividerItemDecoration(getActivity(),
+                DividerItemDecoration.HORIZONTAL
+        ));
+        usersRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+        /*DatabaseHelper helper = new DatabaseHelper(getActivity());
+        List<Users> usersData = helper.getData();
+        for (int i=0;i<usersData.size();i++){
+            Users users = new Users();
+            users.getFullName();
+            Log.d(TAG,"Users FullName is "+users.getFullName());
+            usersData.add(users);
+        }
+        adapter = new UsersAdapter(context,usersData);
+        Log.d(TAG,"ID of View "+usersRecyclerView);
+        usersRecyclerView.setAdapter(adapter);*/
+        DatabaseHelper helper = new DatabaseHelper(getActivity());
+        List<Users> data = helper.getData();
+        adapter = new UsersAdapter(context,data);
+        Log.d(TAG,"Data in users fragment are "+data);
+        usersRecyclerView.setAdapter(adapter);
+        usersRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         return rootView;
     }
+
 }
 

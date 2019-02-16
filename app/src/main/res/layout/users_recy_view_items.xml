@@ -5,37 +5,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/margin_16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/usersImage"
-        android:layout_width="61dp"
-        android:layout_height="71dp"
-        android:layout_marginTop="-8dp"
-        android:background="@drawable/img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:padding="8dp"
+        android:src="@drawable/img"
         android:foregroundGravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/usersName"
-        android:layout_width="match_parent"
+        android:layout_width="304dp"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/usersImage"
-        android:gravity="center"
-        android:text="@string/app_name"/>
+        android:paddingTop="16dp"
+        android:text="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/usersImage" />
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="304dp"
         android:layout_height="wrap_content"
         android:text="E-Mail"
         android:layout_marginTop="@dimen/margin_8dp"
-        app:layout_constraintLeft_toRightOf="@id/usersImage"
-        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/usersImage"
         app:layout_constraintTop_toBottomOf="@id/usersName"
         android:id="@+id/usersEmail"
         />
+    <!--<view
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:paddingTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/usersEmail"
+        />-->
 
 </android.support.constraint.ConstraintLayout>

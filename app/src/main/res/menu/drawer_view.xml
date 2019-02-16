@@ -4,11 +4,12 @@
     <group android:checkableBehavior="single" android:id="@+id/grp1">
         <item
             android:id="@+id/nav_alltask"
-            android:icon="@drawable/blur"
+            android:icon="@drawable/ic_build_black_24dp"
             android:title="All Task" />
         <item
             android:id="@+id/nav_mytask"
-            android:icon="@drawable/landing"
+            android:icon="@drawable/ic_assignment_black_24dp"
+            android:checked="true"
             android:title="My Task" />
     </group>
     <group android:checkableBehavior="single" android:id="@+id/grp2">
@@ -28,7 +29,7 @@
             android:title="Settings" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/images"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
             android:title="Logout" />
     </group>
 </menu>

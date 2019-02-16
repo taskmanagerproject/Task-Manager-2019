@@ -54,7 +54,7 @@ public class AllTaskFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        /*mDatabase = FirebaseDatabase.getInstance().getReference();
         mTasksDatabase = mDatabase.child("Tasks");
         final List<Tasks> allTaskList = new ArrayList<>();
         final List<Tasks> myTaskList = new ArrayList<>();
@@ -87,7 +87,7 @@ public class AllTaskFragment extends BaseFragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
     }
 
@@ -98,6 +98,10 @@ public class AllTaskFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_all_task, container, false);
         mRecyclerView = view.findViewById(R.id.allTaskRecyView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        DatabaseHelper helper = new DatabaseHelper(getActivity());
+        List<Tasks> data = helper.getAllTasks();
+        adapter = new AllTaskAdapter(getActivity(),data);
+        mRecyclerView.setAdapter(adapter);
         ButterKnife.bind(this, view);
         return view;
     }

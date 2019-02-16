@@ -44,6 +44,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query2 = "create table "+ TASK_TABLE + " ( " + ASSIGN    +  " text ,"+ CREATOR + " text, " +DATE_OF_CREATION +" text, "+ DESCRIPTION + " text, "+TASK_ID+ " text, "+TASK_PRIORITY+" text, "+TITLE+" text )";
         sqLiteDatabase.execSQL(query2);
     }
+    /*private ArrayList<String> getData(){
+        List<String> data = new ArrayList<>();
+        String query = "SELECT * FROM USER";
+        Cursor cursor = getReadableDatabase().rawQuery(query,null);
+        if(cursor.getCount()>0){
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                data.add(cursor.getString(cursor.getColumnIndex(FULL_NAME)));
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return  data;
+    }*/
     public void delete_task(){
         SQLiteDatabase writableDatabase=this.getWritableDatabase();
         writableDatabase.delete(TASK_TABLE,null,null);
@@ -98,29 +112,71 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d(TAG,"Sqlite database names are "+allNames);
         return allNames;
     }
-    public ArrayList<Users> getData(){
+    public List<Users> getData(){
         //String query = "SELET * FROM "+TABLE_NAME+" WHERE "+FULL_NAME+ " LIKE %"+searchItem+"%";
-        String query1 = "SELECT " +EMAIL+ "FROM"+TABLE_NAME;
+        String query1 = " SELECT DISTINCT "+ EMAIL +" , "+ FULL_NAME +" FROM "+TABLE_NAME;
         return innerSelect(query1);
     }
 
-    private ArrayList<Users> innerSelect(String query) {
-        Users obj = new Users();
-        ArrayList<Users> allUsers = new ArrayList<Users>();
+    private List<Users> innerSelect(String query) {
+        List<Users> allUsers = new ArrayList<>();
         Cursor c = getReadableDatabase().rawQuery(query,null);
+        Log.d(TAG,"Users Table is "+c.getColumnNames().toString());
         if(c.getCount()>0){
             c.moveToFirst();
             while (!c.isAfterLast()){
+                Log.d(TAG,"Count are "+c.isLast());
+                Users obj = new Users();
                 obj.setFullName(c.getString(c.getColumnIndex(FULL_NAME)));
-                Log.d(TAG,"Value from database is "+c.getColumnIndex(FULL_NAME));
+                obj.setEmail(c.getString(c.getColumnIndex(EMAIL)));
+                Log.d(TAG,"Full Name are 1 "+obj.getFullName());
+                //Log.d(TAG,"Value from database is "+c.getColumnIndex(FULL_NAME));
                 c.moveToNext();
+                Log.d(TAG,"Cursor check "+c.isAfterLast());
                 allUsers.add(obj);
+                Log.d(TAG,"Full Name are 2 "+obj.getFullName());
             }
-
+            allUsers.size();
+            Log.d(TAG,"Size of All Users list are "+allUsers.size());
+            Log.d(TAG,"Full Name are 01 "+allUsers.get(0).getFullName());
+            Log.d(TAG,"Full Name are 02 "+allUsers.get(1).getFullName());
+            Log.d(TAG,"Full Name are 03 "+allUsers.get(2).getFullName());
+            Log.d(TAG,"Full Name are 04 "+allUsers.get(3).getFullName());
         }
         c.close();
         return allUsers;
     }
+    public List<Tasks> getAllTasks(){
+        String taskQuery = "Select * FROM "+TASK_TABLE;
+        return innerTaskSelect(taskQuery);
+    }
+    public List<Tasks> getMyTasks(String email){
+        Log.d(TAG,"Email in database helper "+email);
+        String taskQuery = "SELECT * FROM "+TASK_TABLE+" WHERE ASSIGN"+"='"+email+"'";
+        Log.d(TAG,"Query is "+taskQuery);
+        return innerTaskSelect(taskQuery);
+    }
+
+    private List<Tasks> innerTaskSelect(String taskQuery) {
+        List<Tasks> data = new ArrayList<>();
+        Cursor c = getReadableDatabase().rawQuery(taskQuery,null);
+        Log.d(TAG,"cursor count: "+c.getCount());
+        if(c.getCount()>0){
+            c.moveToFirst();
+            while (!c.isAfterLast()){
+                Log.d(TAG,"Count are "+c.isLast());
+                Tasks obj = new Tasks();
+                obj.setTitle(c.getString(c.getColumnIndex(TITLE)));
+                obj.setDescription(c.getString(c.getColumnIndex(DESCRIPTION)));
+                c.moveToNext();
+                data.add(obj);
+            }
+        }
+        c.close();
+        return  data;
+    }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {

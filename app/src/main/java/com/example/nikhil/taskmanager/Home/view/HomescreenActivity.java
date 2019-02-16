@@ -85,7 +85,7 @@ public class HomescreenActivity extends BaseActivity {
         actionBarDrawerToggle.syncState();
         String name = mPreferenceHelper.getString("full_name","");
         Log.d(TAG,"Full Name is "+name);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         fullname = header.findViewById(R.id.nav_full_name);
         email = header.findViewById(R.id.nav_email);
@@ -209,9 +209,11 @@ public class HomescreenActivity extends BaseActivity {
         });
 
 
+
         MyTaskFragment Fragment = new MyTaskFragment();
         setTitle("My Task");
         addFragment(Fragment);
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -252,9 +254,7 @@ public class HomescreenActivity extends BaseActivity {
                         }
                         Log.d("Itemid","Selected ID:"+id);
                         mDrawerLayout.closeDrawer(GravityCompat.START);
-
                         menuItem.setChecked(true);
-
                         return true;
                     }
                 });
@@ -301,6 +301,10 @@ public class HomescreenActivity extends BaseActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                MyTaskFragment Fragment = new MyTaskFragment();
+                setTitle("My Task");
+                addFragment(Fragment);
+                item.setChecked(true);
                 return true;
         }
         return super.onOptionsItemSelected(item);

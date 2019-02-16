@@ -15,25 +15,24 @@ import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHolder>  {
-
-    protected  Context mContext;
+public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHolder> {
+    protected Context mContext;
     private List<Tasks> mData;
-    public AllTaskAdapter(Context context, List<Tasks> data){
+    public MyTaskAdapter(Context context, List<Tasks> data){
         this.mContext = context;
         this.mData = data;
     }
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.all_task_recy_item,viewGroup, false);
-        return new AllTaskAdapter.MyViewHolder(view);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.my_task_recy_view_items,viewGroup, false);
+        return new MyTaskAdapter.MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         Tasks t = mData.get(i);
-        Log.d(TAG,"Values are "+t.getTitle());
-        Log.d(TAG,"Values are "+t.getDescription());
+        Log.d(TAG,"Values in my task "+t.getTitle());
+        Log.d(TAG,"Values in my task "+t.getDescription());
         myViewHolder.taskTitle.setText(t.getTitle());
         myViewHolder.taskDescription.setText(t.getDescription());
     }
@@ -45,11 +44,11 @@ public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView taskDescription,taskTitle;
+        TextView taskDescription,taskTitle,taskCreator;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            taskDescription = itemView.findViewById(R.id.task_description);
-            taskTitle = itemView.findViewById(R.id.task_title);
+            taskDescription = itemView.findViewById(R.id.my_task_description);
+            taskTitle = itemView.findViewById(R.id.my_task_title);
         }
 
     }
