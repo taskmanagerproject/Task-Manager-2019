@@ -10,7 +10,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/myTaskRecyView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="@dimen/margin_8dp"
+        >
 
     </android.support.v7.widget.RecyclerView>
 
@@ -28,7 +31,8 @@
         android:id="@+id/FloatingPlusBtnMyTask"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
-        android:layout_margin="24dp"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_8dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="New Task"
         android:textColor="@color/light_white"

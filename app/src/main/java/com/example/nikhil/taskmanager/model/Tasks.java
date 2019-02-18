@@ -66,6 +66,13 @@ public class Tasks {
     private String assignTo;
     private String Creator;
     private String Date_of_creator;
+    private String status;
 
+    public String getStatus() {
+        return status;
+    }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

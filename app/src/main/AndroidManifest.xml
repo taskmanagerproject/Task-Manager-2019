@@ -11,8 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-
         <activity android:name=".splash.view.SplashActivity">
 
             <!--
@@ -37,15 +35,14 @@
         <activity
             android:name=".task.view.TaskActivity"
             android:parentActivityName=".Home.view.HomescreenActivity"
-            android:windowSoftInputMode="adjustResize"
-            >
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Home.view.HomescreenActivity" />
         </activity>
-        <activity android:name=".Home.view.HomescreenActivity">
-        </activity>
-        <activity android:name=".Home.view.navigationHeader"/>
+        <activity android:name=".Home.view.HomescreenActivity"></activity>
+        <activity android:name=".Home.view.navigationHeader" />
+        <activity android:name=".task.view.TaskDataActivity"></activity>
     </application>
 
 </manifest>

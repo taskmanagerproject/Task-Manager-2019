@@ -5,41 +5,102 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/margin_8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <android.support.design.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="4dp"
             app:cardElevation="2dp"
+            android:padding="@dimen/margin_8dp"
             app:cardPreventCornerOverlap="false"
             app:strokeWidth="2dp"
             >
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
                 >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Title"
+                    android:padding="8dp"
                     android:id="@+id/my_task_title"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Unit_Price:"
+                    android:padding="2dp"
                     app:layout_constraintTop_toBottomOf="@id/my_task_title"
                     android:id="@+id/my_task_description"
                     />
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:padding="2dp"
+                    android:text="Assignee: "
+                    android:id="@+id/my_task_assignee"
+                    app:layout_constraintTop_toBottomOf="@id/my_task_description"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:paddingLeft="4dp"
+                    android:id="@+id/my_task_assign_member"
+                    android:text="Assign member"
+                    app:layout_constraintStart_toEndOf="@id/my_task_assignee"
+                    app:layout_constraintTop_toBottomOf="@id/my_task_description"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="Priority: "
+                    android:id="@+id/my_task_prior"
+                    app:layout_constraintTop_toBottomOf="@id/my_task_assignee"
+                    />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:padding="2dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:id="@+id/my_task_priority_view"
+                    app:layout_constraintTop_toBottomOf="@id/my_task_assignee"
+                    app:layout_constraintStart_toEndOf="@id/my_task_prior"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    app:layout_constraintStart_toEndOf="@id/my_task_priority_view"
+                    android:text="Priority"
+                    android:id="@+id/my_task_priority"
+                    app:layout_constraintTop_toBottomOf="@id/my_task_assignee"
+                    android:paddingLeft="@dimen/margin_8dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="Status:"
+                    android:id="@+id/my_task_status_label"
+                    app:layout_constraintTop_toBottomOf="@id/my_task_prior"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:id="@+id/my_task_status"
+                    android:paddingLeft="@dimen/margin_8dp"
+                    android:text="Task Status"
+                    app:layout_constraintStart_toEndOf="@id/my_task_status_label"
+                    app:layout_constraintTop_toBottomOf="@id/my_task_priority"
+                    />
             </android.support.constraint.ConstraintLayout>
 
         </android.support.design.card.MaterialCardView>
-
-    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

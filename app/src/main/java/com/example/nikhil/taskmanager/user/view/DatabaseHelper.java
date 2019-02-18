@@ -17,7 +17,7 @@ import static android.support.constraint.Constraints.TAG;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME="DATA.db";
+    private static final String DATABASE_NAME="NEW_DATABASE.db";
     private static final int DATABASE_VERSION=1;
     private static final String TABLE_NAME = "USER";
     private static final String TEAM_NAME = "TEAM_NAME";
@@ -33,6 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TASK_ID = "TASK_ID";
     private static final String TASK_PRIORITY = "TASK_PRIORITY";
     private static final String TITLE = "TITLE";
+    private static final String TASK_STATUS = "TASK_STATUS";
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -41,7 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String query1 = "create table "+ TABLE_NAME + " ( " + FULL_NAME + " text,"+ TEAM_NAME + " text, " + EMAIL + " text UNIQUE NOT NULL," + USERNAME + " text," + PASSWORD + " text, UNIQUE(EMAIL,TEAM_NAME))";
         sqLiteDatabase.execSQL(query1);
-        String query2 = "create table "+ TASK_TABLE + " ( " + ASSIGN    +  " text ,"+ CREATOR + " text, " +DATE_OF_CREATION +" text, "+ DESCRIPTION + " text, "+TASK_ID+ " text, "+TASK_PRIORITY+" text, "+TITLE+" text )";
+        String query2 = "create table "+ TASK_TABLE + " ( " + ASSIGN    +  " text ,"+ CREATOR + " text, " +DATE_OF_CREATION +" text, "+ DESCRIPTION + " text, "+TASK_ID+ " text, "+TASK_PRIORITY+" text, "+TITLE+" text, "+ TASK_STATUS+ " text )";
+
         sqLiteDatabase.execSQL(query2);
     }
     /*private ArrayList<String> getData(){
@@ -74,6 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentvalues.put(TASK_ID,model.getID());
         contentvalues.put(TASK_PRIORITY,model.getPriority());
         contentvalues.put(TITLE,model.getTitle());
+        contentvalues.put(TASK_STATUS,model.getStatus());
         writableDatabase.insert(TASK_TABLE,null,contentvalues);
         writableDatabase.close();
         Log.d(TAG,"Table progress Created Successfully!!");
@@ -168,6 +171,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Tasks obj = new Tasks();
                 obj.setTitle(c.getString(c.getColumnIndex(TITLE)));
                 obj.setDescription(c.getString(c.getColumnIndex(DESCRIPTION)));
+                obj.setPriority(c.getString(c.getColumnIndex(TASK_PRIORITY)));
+                obj.setAssignTo(c.getString(c.getColumnIndex(ASSIGN)));
+                obj.setStatus(c.getString(c.getColumnIndex(TASK_STATUS)));
+                obj.setID(c.getString(c.getColumnIndex(TASK_ID)));
                 c.moveToNext();
                 data.add(obj);
             }

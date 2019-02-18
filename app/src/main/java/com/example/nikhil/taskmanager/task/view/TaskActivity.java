@@ -130,12 +130,14 @@ public class TaskActivity extends BaseActivity {
             tasks.setAssignTo(assignTo.getText().toString());
             tasks.setCreator(email);
             tasks.setDate_of_creator(time);
+            tasks.setStatus("Ready For developement");
             mDatabase.child("Tasks").child(time+"_"+teamName).setValue(tasks)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d("ds", "On Success");
                             Toast.makeText(getApplicationContext(),"Data success",Toast.LENGTH_LONG).show();
+                            finish();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -154,7 +156,8 @@ public class TaskActivity extends BaseActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                finish();
+                //NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);

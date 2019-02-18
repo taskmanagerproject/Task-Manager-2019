@@ -1,6 +1,7 @@
 package com.example.nikhil.taskmanager;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -35,6 +36,18 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
         Log.d(TAG,"Values in my task "+t.getDescription());
         myViewHolder.taskTitle.setText(t.getTitle());
         myViewHolder.taskDescription.setText(t.getDescription());
+        myViewHolder.taskAssignee.setText(t.getAssignTo());
+        myViewHolder.taskPriority.setText(t.getPriority());
+        if (t.getPriority().equals("Low")){
+            myViewHolder.priorityViewColor.setBackgroundColor(Color.parseColor("#FF0000"));
+        }
+        else if(t.getPriority().equals("Medium")){
+            myViewHolder.priorityViewColor.setBackgroundColor(Color.parseColor("#FFFF00"));
+        }
+        else if(t.getPriority().equals("High")){
+            myViewHolder.priorityViewColor.setBackgroundColor(Color.parseColor("#32CD32"));
+        }
+        myViewHolder.taskStatus.setText(t.getStatus());
     }
 
     @Override
@@ -44,11 +57,16 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView taskDescription,taskTitle,taskCreator;
+        TextView taskDescription,taskTitle,taskAssignee,taskPriority,taskStatus;
+        View priorityViewColor;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             taskDescription = itemView.findViewById(R.id.my_task_description);
             taskTitle = itemView.findViewById(R.id.my_task_title);
+            taskAssignee = itemView.findViewById(R.id.my_task_assign_member);
+            taskPriority = itemView.findViewById(R.id.my_task_priority);
+            taskStatus = itemView.findViewById(R.id.my_task_status);
+            priorityViewColor = itemView.findViewById(R.id.my_task_priority_view);
         }
 
     }
