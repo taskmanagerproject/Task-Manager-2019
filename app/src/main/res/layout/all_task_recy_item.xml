@@ -20,6 +20,17 @@
             android:padding="4dp"
             >
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/myTaskImageInAllTask"
+        android:visibility="invisible"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:padding="@dimen/margin_8dp"
+        android:layout_margin="@dimen/margin_8dp"
+        android:background="@drawable/ic_assignment_black_24dp"
+        app:layout_constraintRight_toRightOf="parent"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,12 +45,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Description"
+        android:textSize="16sp"
         android:padding="2dp"
         android:maxLines="2"
         app:layout_constraintTop_toBottomOf="@id/task_title"
         android:id="@+id/task_description"
         />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

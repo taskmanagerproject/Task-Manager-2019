@@ -34,7 +34,7 @@
         android:layout_height="56dp"
         app:cornerRadius="32dp"
         app:strokeColor="@color/colorAccent"
-        android:layout_marginRight="@dimen/margin_8dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         android:layout_marginBottom="@dimen/margin_16dp"
         android:textColor="@color/light_white"
         app:icon="@drawable/ic_add_black_24dp"

@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="56dp"
         android:layout_marginBottom="@dimen/margin_16dp"
-        android:layout_marginRight="@dimen/margin_8dp"
+        android:layout_marginRight="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="New Task"
         android:textColor="@color/light_white"

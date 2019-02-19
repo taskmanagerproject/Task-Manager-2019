@@ -100,7 +100,7 @@ public class AllTaskFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         DatabaseHelper helper = new DatabaseHelper(getActivity());
         List<Tasks> data = helper.getAllTasks();
-        adapter = new AllTaskAdapter(getActivity(),data);
+        adapter = new AllTaskAdapter(getActivity(),data,AppConstant.BundleKey.EMAIL);
         mRecyclerView.setAdapter(adapter);
         ButterKnife.bind(this, view);
         return view;

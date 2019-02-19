@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,9 +25,11 @@ public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHo
 
     protected  Context mContext;
     private List<Tasks> mData;
-    public AllTaskAdapter(Context context, List<Tasks> data){
+    String mEmail;
+    public AllTaskAdapter(Context context, List<Tasks> data,String email){
         this.mContext = context;
         this.mData = data;
+        this.mEmail = email;
     }
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -37,10 +40,14 @@ public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         final Tasks t = mData.get(i);
+        myViewHolder.img.setVisibility(View.INVISIBLE);
         Log.d(TAG,"Values are "+t.getTitle());
         Log.d(TAG,"Values are "+t.getDescription());
         myViewHolder.taskTitle.setText(t.getTitle());
         myViewHolder.taskDescription.setText(t.getDescription());
+        if (t.getAssignTo().equals(mEmail)){
+            myViewHolder.img.setVisibility(View.VISIBLE);
+        }
         myViewHolder.taskAssignee.setText(t.getAssignTo());
         myViewHolder.taskPriority.setText(t.getPriority());
         if (t.getPriority().equals("Low")){
@@ -74,6 +81,7 @@ public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHo
         TextView taskDescription,taskTitle,taskAssignee,taskPriority,taskStatus;
         View priorityViewColor;
         MaterialCardView cardView;
+        ImageView img;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             taskDescription = itemView.findViewById(R.id.task_description);
@@ -83,6 +91,7 @@ public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHo
             priorityViewColor = itemView.findViewById(R.id.task_priority_view);
             taskStatus = itemView.findViewById(R.id.task_status);
             cardView = itemView.findViewById(R.id.allTaskCardview);
+            img  = itemView.findViewById(R.id.myTaskImageInAllTask);
         }
 
     }
