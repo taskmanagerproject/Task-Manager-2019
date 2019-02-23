@@ -20,6 +20,7 @@ import com.example.nikhil.taskmanager.base.view.BaseActivity;
 import com.example.nikhil.taskmanager.landing.view.LandingActivity;
 import com.example.nikhil.taskmanager.model.Tasks;
 import com.example.nikhil.taskmanager.model.Users;
+import com.example.nikhil.taskmanager.settings.view.SettingsFragment;
 import com.example.nikhil.taskmanager.user.view.DatabaseHelper;
 import com.example.nikhil.taskmanager.user.view.UsersFragment;
 import com.google.firebase.database.DataSnapshot;
@@ -240,6 +241,8 @@ public class HomescreenActivity extends BaseActivity {
                         }
                         else if(id == R.id.nav_setting){
                             setTitle("Settings");
+                            SettingsFragment fragment = new SettingsFragment();
+                            replaceFragment(fragment);
                         }
                         else if(id == R.id.nav_logout){
                             mPreferenceHelper.putBoolean("is_Login",false);
