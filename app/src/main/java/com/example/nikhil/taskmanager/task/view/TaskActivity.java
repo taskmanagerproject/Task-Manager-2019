@@ -130,7 +130,7 @@ public class TaskActivity extends BaseActivity {
             tasks.setAssignTo(assignTo.getText().toString());
             tasks.setCreator(email);
             tasks.setDate_of_creator(time);
-            tasks.setStatus("Ready For developement");
+            tasks.setStatus("In Progress");
             mDatabase.child("Tasks").child(time+"_"+teamName).setValue(tasks)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

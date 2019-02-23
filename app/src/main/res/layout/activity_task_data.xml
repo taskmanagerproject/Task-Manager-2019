@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:title="Task Data"
+        app:title="Task Info"
         app:titleTextColor="#FFFFFF"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -63,25 +63,46 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+
+
+    <!--<android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/taskDataStatus"
         app:layout_constraintTop_toBottomOf="@id/taskDataDescription"
         android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginBottom="@dimen/margin_16dp"
-        >
+        >-->
 
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:id="@+id/edit_text_task_status"
+            android:textSize="20sp"
+            android:layout_marginLeft="16dp"
+            android:paddingLeft="@dimen/margin_8dp"
+            android:id="@+id/taskDataStatus"
+            app:layout_constraintTop_toBottomOf="@id/taskDataDescription"
             android:singleLine="true"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginBottom="@dimen/margin_16dp"
             android:layout_marginRight="@dimen/margin_8dp"
-            android:hint="Task Status" />
+            android:hint="Task Status: " />
+        <Spinner
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:popupBackground="#A9A9A9"
+            android:entries="@array/spinnerItems"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginBottom="@dimen/margin_16dp"
+            android:layout_marginLeft="8dp"
+            android:id="@+id/taskStatusSpinner"
+            app:layout_constraintTop_toTopOf="@id/taskDataStatus"
+            app:layout_constraintBottom_toBottomOf="@id/taskDataStatus"
+            app:layout_constraintLeft_toRightOf="@id/taskDataStatus"
+            app:layout_constraintTop_toBottomOf="@id/taskDataDescription"
+            ></Spinner>
 
-    </android.support.design.widget.TextInputLayout>
+    <!--</android.support.design.widget.TextInputLayout>-->
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -187,7 +208,7 @@
             />
     </RadioGroup>
 
-    <android.support.design.widget.TextInputLayout
+    <!--<android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/taskDataCreatedDate"
@@ -205,7 +226,7 @@
             android:layout_marginRight="@dimen/margin_8dp"
             android:hint="Task Created Date" />
 
-    </android.support.design.widget.TextInputLayout>
+    </android.support.design.widget.TextInputLayout>-->
 
 </android.support.constraint.ConstraintLayout>
 </ScrollView>

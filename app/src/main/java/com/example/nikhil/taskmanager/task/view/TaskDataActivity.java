@@ -1,5 +1,6 @@
 package com.example.nikhil.taskmanager.task.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
@@ -8,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toolbar;
 
 import com.example.nikhil.taskmanager.R;
@@ -25,8 +28,10 @@ public class TaskDataActivity extends BaseActivity {
 
     android.support.v7.widget.Toolbar toolbar;
     DatabaseReference mDatabase,TasksDatabaseValue;
+    Spinner taskSpinner;
     TextInputEditText taskTitle,taskDescription,taskStatus,taskAssignee,taskReporter,taskCreatedDate;
     RadioGroup taskPriority;
+    Context context = this;
     private static final String TAG = "TaskDataActivity";
 
     @Override
@@ -35,11 +40,12 @@ public class TaskDataActivity extends BaseActivity {
         setContentView(R.layout.activity_task_data);
         taskTitle = findViewById(R.id.edit_text_task_title);
         taskDescription = findViewById(R.id.edit_text_task_description);
-        taskStatus = findViewById(R.id.edit_text_task_status);
+        //taskStatus = findViewById(R.id.edit_text_task_status);
         taskAssignee  = findViewById(R.id.edit_text_task_assignee);
         taskReporter = findViewById(R.id.edit_text_task_reporter);
         taskPriority = findViewById(R.id.taskDataPriority);
-        taskCreatedDate  = findViewById(R.id.edit_text_task_created_date);
+        //taskCreatedDate  = findViewById(R.id.edit_text_task_created_date);
+        taskSpinner = findViewById(R.id.taskStatusSpinner);
         Intent fromAllTask = getIntent();
         final String ID  = fromAllTask.getStringExtra("TASK_ID");
         Log.d(TAG,"TAsk Data ID is " + ID);
@@ -62,7 +68,20 @@ public class TaskDataActivity extends BaseActivity {
                         final Tasks tasks = dataSnapshot1.getValue(Tasks.class);
                         taskTitle.setText(tasks.getTitle());
                         taskDescription.setText(tasks.getDescription());
-                        taskStatus.setText(tasks.getStatus());
+                        //taskStatus.setText(tasks.getStatus());
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,R.array.spinnerItems,android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        taskSpinner.setAdapter(adapter);
+                        if (tasks.getStatus() != null){
+                            int spinpos = adapter.getPosition(tasks.getStatus());
+                            taskSpinner.setSelection(spinpos);
+                        }
+
+
+                        /*taskSpinner.getChildCount();
+                        for(int i=0; i<taskSpinner.getChildCount();i++){
+                            String spin = taskSpinner.getSelectedItem().toString();
+                        }*/
                         taskAssignee.setText(tasks.getAssignTo());
                         taskReporter.setText(tasks.getCreator());
                         for(int id=0; id < taskPriority.getChildCount(); id++){
@@ -74,7 +93,7 @@ public class TaskDataActivity extends BaseActivity {
                                 //taskPriority.check(ID);
                             }
                         }
-                        taskCreatedDate.setText(tasks.getDate_of_creator());
+                        //==taskCreatedDate.setText(tasks.getDate_of_creator());
                     }
                 }
             }

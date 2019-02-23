@@ -17,6 +17,7 @@ import com.example.nikhil.taskmanager.base.view.BaseActivity;
 import com.example.nikhil.taskmanager.login.view.LoginActivity;
 import com.example.nikhil.taskmanager.R;
 import com.example.nikhil.taskmanager.signup.view.SignUpActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +48,7 @@ public class EnterTeamNameActivity extends BaseActivity {
                 final String teamName = team_name.getText().toString().trim().toLowerCase();
                 mDatabase = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference TeamReference = mDatabase.child("Teams").child(teamName);
+
                 switch (RecievedTextFromIntent){
                     case "create":
                         Log.d(TAG,"On Create");

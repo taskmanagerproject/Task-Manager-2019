@@ -31,7 +31,9 @@
         </activity>
         <activity android:name=".team.view.EnterTeamNameActivity" />
         <activity android:name=".login.view.LoginActivity" />
-        <activity android:name=".signup.view.SignUpActivity" />
+        <activity android:name=".signup.view.SignUpActivity"
+            
+            />
         <activity
             android:name=".task.view.TaskActivity"
             android:parentActivityName=".Home.view.HomescreenActivity"

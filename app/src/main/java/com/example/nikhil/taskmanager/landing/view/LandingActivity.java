@@ -26,6 +26,8 @@ public class LandingActivity extends BaseActivity {
         signIn = findViewById(R.id.login_button_landing);
         createTeam = findViewById(R.id.create_team_button);
         joinTeam = findViewById(R.id.joinTeam_button_landing);
+        joinTeam.setBackgroundColor(0x00000000);
+        signIn.setBackgroundColor(0x00000000);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

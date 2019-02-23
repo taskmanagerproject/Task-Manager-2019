@@ -1,16 +1,20 @@
 package com.example.nikhil.taskmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nikhil.taskmanager.model.Tasks;
+import com.example.nikhil.taskmanager.task.view.TaskDataActivity;
 
 import java.util.List;
 
@@ -31,7 +35,7 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        Tasks t = mData.get(i);
+        final Tasks t = mData.get(i);
         Log.d(TAG,"Values in my task "+t.getTitle());
         Log.d(TAG,"Values in my task "+t.getDescription());
         myViewHolder.taskTitle.setText(t.getTitle());
@@ -48,6 +52,15 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
             myViewHolder.priorityViewColor.setBackgroundColor(Color.parseColor("#32CD32"));
         }
         myViewHolder.taskStatus.setText(t.getStatus());
+        myViewHolder.myTaskCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext,t.getID(),Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext,TaskDataActivity.class);
+                intent.putExtra("TASK_ID",t.getID());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -59,6 +72,7 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
 
         TextView taskDescription,taskTitle,taskAssignee,taskPriority,taskStatus;
         View priorityViewColor;
+        CardView myTaskCardView;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             taskDescription = itemView.findViewById(R.id.my_task_description);
@@ -67,6 +81,7 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
             taskPriority = itemView.findViewById(R.id.my_task_priority);
             taskStatus = itemView.findViewById(R.id.my_task_status);
             priorityViewColor = itemView.findViewById(R.id.my_task_priority_view);
+            myTaskCardView = itemView.findViewById(R.id.myTaskCardView);
         }
 
     }
