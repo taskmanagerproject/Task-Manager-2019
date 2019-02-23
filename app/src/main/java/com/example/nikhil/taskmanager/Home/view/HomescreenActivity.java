@@ -216,7 +216,30 @@ public class HomescreenActivity extends BaseActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
 
                         // set item as selected to persist highlight
-                        int id = menuItem.getItemId();
+                        switch (menuItem.getItemId()){
+                            case R.id.nav_alltask:
+                                setTitle("All Task");
+                                AllTaskFragment allTaskFragment= new AllTaskFragment();
+                                replaceFragment(allTaskFragment);
+                                break;
+                            case R.id.nav_mytask:
+                                setTitle("My Task");
+                                MyTaskFragment myTaskFragment= new MyTaskFragment();
+                                replaceFragment(myTaskFragment);
+                                break;
+                            case R.id.nav_users:
+                                setTitle("Team Users");
+                                UsersFragment fragment = new UsersFragment();
+                                replaceFragment(fragment);
+                                break;
+                            case R.id.nav_logout:
+                                mPreferenceHelper.putBoolean("is_Login",false);
+                                Intent intent = new Intent(HomescreenActivity.this,LandingActivity.class);
+                                startActivity(intent);
+                                finish();
+                                break;
+                        }
+                        /*int id = menuItem.getItemId();
 
                         if(id == R.id.nav_alltask){
                             setTitle("All Task");
@@ -248,8 +271,8 @@ public class HomescreenActivity extends BaseActivity {
                             mPreferenceHelper.putBoolean("is_Login",false);
                             Intent intent = new Intent(HomescreenActivity.this,LandingActivity.class);
                             startActivity(intent);
-                        }
-                        Log.d("Itemid","Selected ID:"+id);
+                        }*/
+                        //Log.d("Itemid","Selected ID:"+id);
                         mDrawerLayout.closeDrawer(GravityCompat.START);
                         menuItem.setChecked(true);
                         return true;
