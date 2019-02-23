@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.example.nikhil.taskmanager.R;
 import com.example.nikhil.taskmanager.base.view.BaseFragment;
 
-
+//This class is resonsible for showing the settings
 public class SettingsFragment extends BaseFragment {
 
 
