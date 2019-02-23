@@ -75,6 +75,17 @@ public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHo
     public int getItemCount() {
         return mData.size();
     }
+    public void setAllTaskCollection(List<Tasks> collection) {
+        this.mData = collection;
+        notifyDataSetChanged();
+    }
+
+    public void clearCollection() {
+        if (mData != null) {
+            mData.clear();
+            notifyDataSetChanged();
+        }
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 

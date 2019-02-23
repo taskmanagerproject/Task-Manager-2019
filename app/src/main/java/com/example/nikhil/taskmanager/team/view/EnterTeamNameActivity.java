@@ -24,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Pattern;
+
 public class EnterTeamNameActivity extends BaseActivity {
     String RecievedTextFromIntent;
     Button NextBtn;
@@ -38,17 +40,21 @@ public class EnterTeamNameActivity extends BaseActivity {
         setContentView(R.layout.activity_enter_team_name);
         final Intent intent = getIntent();
         team_name = findViewById(R.id.enterTeam);
+        final Pattern regex = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]");
         RecievedTextFromIntent = intent.getStringExtra("click");
         mDatabase =   FirebaseDatabase.getInstance().getReference();
         NextBtn = findViewById(R.id.NextBtn);
+
         NextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 final String teamName = team_name.getText().toString().trim().toLowerCase();
                 mDatabase = FirebaseDatabase.getInstance().getReference();
+                if(teamName.matches("[$&+,:;=\\\\?@#|/'<>.^*()%!-]")){
+                    Toast.makeText(EnterTeamNameActivity.this,"Special Characters are not allowed!",Toast.LENGTH_LONG).show();
+                }
                 DatabaseReference TeamReference = mDatabase.child("Teams").child(teamName);
-
                 switch (RecievedTextFromIntent){
                     case "create":
                         Log.d(TAG,"On Create");

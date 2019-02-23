@@ -45,6 +45,7 @@ public class AllTaskFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private AllTaskAdapter adapter;
     private DatabaseReference mDatabase,mTasksDatabase;
+    List<Tasks> allTaskList;
 
     public AllTaskFragment() {
         // Required empty public constructor
@@ -54,9 +55,9 @@ public class AllTaskFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mTasksDatabase = mDatabase.child("Tasks");
-        final List<Tasks> allTaskList = new ArrayList<>();
+        allTaskList = new ArrayList<>();
         final List<Tasks> myTaskList = new ArrayList<>();
         mTasksDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -79,7 +80,7 @@ public class AllTaskFragment extends BaseFragment {
                         }
                     }
                 }
-                adapter = new AllTaskAdapter(getActivity(),allTaskList);
+                adapter = new AllTaskAdapter(getActivity(),allTaskList,AppConstant.BundleKey.EMAIL);
                 mRecyclerView.setAdapter(adapter);
             }
 
@@ -87,7 +88,7 @@ public class AllTaskFragment extends BaseFragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
 
     }
 
@@ -99,9 +100,9 @@ public class AllTaskFragment extends BaseFragment {
         mRecyclerView = view.findViewById(R.id.allTaskRecyView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         DatabaseHelper helper = new DatabaseHelper(getActivity());
-        List<Tasks> data = helper.getAllTasks();
-        adapter = new AllTaskAdapter(getActivity(),data,AppConstant.BundleKey.EMAIL);
-        mRecyclerView.setAdapter(adapter);
+        //List<Tasks> data = helper.getAllTasks();
+        /*adapter = new AllTaskAdapter(getActivity(),allTaskList,AppConstant.BundleKey.EMAIL);
+        mRecyclerView.setAdapter(adapter);*/
         ButterKnife.bind(this, view);
         return view;
     }

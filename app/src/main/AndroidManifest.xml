@@ -32,7 +32,7 @@
         <activity android:name=".team.view.EnterTeamNameActivity" />
         <activity android:name=".login.view.LoginActivity" />
         <activity android:name=".signup.view.SignUpActivity"
-            
+            android:windowSoftInputMode="adjustResize"
             />
         <activity
             android:name=".task.view.TaskActivity"

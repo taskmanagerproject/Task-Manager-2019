@@ -1,4 +1,4 @@
-package com.example.nikhil.taskmanager.Home.view;
+package com.example.nikhil.taskmanager.user.view;
 
 import android.content.Context;
 import android.net.Uri;
