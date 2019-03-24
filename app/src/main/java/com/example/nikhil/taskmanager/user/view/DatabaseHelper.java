@@ -99,15 +99,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         writableDatabase.insert(TABLE_NAME,null,contentvalues);
         writableDatabase.close();
     }
-    public ArrayList<String> getAllNames(){
-        ArrayList<String> allNames = new ArrayList<>();
-        String query = "SELECT DISTINCT " +EMAIL+ " FROM "+TABLE_NAME;
+    public ArrayList<Users> getAllNames(){
+        ArrayList<Users> allNames = new ArrayList<>();
+        String query = "SELECT * FROM "+TABLE_NAME;
 
         Cursor cursor = getReadableDatabase().rawQuery(query,null);
         if(cursor.getCount()>0){
             cursor.moveToFirst();
+            Log.d(TAG,"Status of cursors "+cursor.isAfterLast());
+            Log.d(TAG,"Status of cursors "+cursor.getCount());
             while (!cursor.isAfterLast()){
-                allNames.add(cursor.getString(0));
+                Users obj = new Users();
+                obj.setFullName(cursor.getString(cursor.getColumnIndex(FULL_NAME)));
+                obj.setEmail(cursor.getString(cursor.getColumnIndex(EMAIL)));
+                allNames.add(obj);
                 cursor.moveToNext();
             }
         }

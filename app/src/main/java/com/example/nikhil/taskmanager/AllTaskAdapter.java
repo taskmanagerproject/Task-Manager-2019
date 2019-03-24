@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nikhil.taskmanager.Constants.AppConstant;
 import com.example.nikhil.taskmanager.model.Tasks;
 import com.example.nikhil.taskmanager.task.view.TaskDataActivity;
 
@@ -25,11 +26,16 @@ public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHo
 
     protected  Context mContext;
     private List<Tasks> mData;
-    String mEmail;
+    String mEmail,mTeamName;
     public AllTaskAdapter(Context context, List<Tasks> data,String email){
         this.mContext = context;
         this.mData = data;
         this.mEmail = email;
+    }
+    public AllTaskAdapter(String teamName){
+        this.mTeamName  = teamName;
+    }
+    public AllTaskAdapter(){
     }
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -40,6 +46,7 @@ public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         final Tasks t = mData.get(i);
+        //myViewHolder.teamName.setText(mTeamName);
         myViewHolder.img.setVisibility(View.INVISIBLE);
         Log.d(TAG,"Values are "+t.getTitle());
         Log.d(TAG,"Values are "+t.getDescription());
@@ -75,6 +82,7 @@ public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHo
     public int getItemCount() {
         return mData.size();
     }
+
     public void setAllTaskCollection(List<Tasks> collection) {
         this.mData = collection;
         notifyDataSetChanged();
@@ -87,9 +95,10 @@ public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHo
         }
     }
 
+
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView taskDescription,taskTitle,taskAssignee,taskPriority,taskStatus;
+        TextView taskDescription,taskTitle,taskAssignee,taskPriority,taskStatus,teamName;
         View priorityViewColor;
         MaterialCardView cardView;
         ImageView img;
@@ -103,6 +112,7 @@ public class AllTaskAdapter extends RecyclerView.Adapter<AllTaskAdapter.MyViewHo
             taskStatus = itemView.findViewById(R.id.task_status);
             cardView = itemView.findViewById(R.id.allTaskCardview);
             img  = itemView.findViewById(R.id.myTaskImageInAllTask);
+            //teamName = itemView.findViewById(R.id.nameofTeamInAllTask);
         }
 
     }

@@ -107,7 +107,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:dropDownWidth="match_parent"
-            android:completionThreshold="0"
             android:dropDownHeight="400dp"
             android:id="@+id/create_task_assign"
             android:hint="Assign To"

@@ -14,19 +14,23 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nikhil.taskmanager.Constants.AppConstant;
 import com.example.nikhil.taskmanager.Home.view.HomescreenActivity;
 import com.example.nikhil.taskmanager.R;
+import com.example.nikhil.taskmanager.SearchItemArrayAdapter;
 import com.example.nikhil.taskmanager.base.view.BaseActivity;
 import com.example.nikhil.taskmanager.model.Tasks;
 import com.example.nikhil.taskmanager.model.Teams;
@@ -55,6 +59,7 @@ import butterknife.OnClick;
 public class TaskActivity extends BaseActivity {
     private static final String TAG = "Task Activity";
     String email = "",teamName;
+    String assignMember;
     RadioGroup priority;
     private DatabaseReference mDatabase;
     TextInputEditText title,description;
@@ -79,11 +84,28 @@ public class TaskActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.drawable.arrow_back);
         priority = findViewById(R.id.priorityRadio);
         DatabaseHelper helper = new DatabaseHelper(TaskActivity.this);
-        ArrayList<String> allNames = helper.getAllNames();
+        ArrayList<Users> allNames = helper.getAllNames();
         Log.d(TAG,"Allnames are"+allNames);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(TaskActivity.this,
-                android.R.layout.simple_dropdown_item_1line,allNames);
+        /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(TaskActivity.this,
+                R.layout.activity_autocomplete_layout,allNames);*/
 
+        Log.d(TAG,"Helper.getData() "+helper.getData());
+        assignTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d(TAG, "View : " + view);
+                ConstraintLayout parentLayout = (ConstraintLayout) view;
+                TextView textView = (TextView) parentLayout.getChildAt(1);
+                TextView emailTv = (TextView) parentLayout.getChildAt(2);
+                assignMember = emailTv.getText().toString();
+                String email = textView.getText().toString();
+                Log.d(TAG,"Email in task activity is "+assignMember);
+                assignTo.setText(email);
+                //Log.d(TAG, "Child Count ; " + view.getC)
+            }
+        });
+        SearchItemArrayAdapter adapter = new SearchItemArrayAdapter(this, R.layout.activity_autocomplete_layout,allNames);
+        assignTo.setThreshold(0);
         assignTo.setAdapter(adapter);
 
 
@@ -127,7 +149,7 @@ public class TaskActivity extends BaseActivity {
             tasks.setTitle(title.getText().toString());
             tasks.setDescription(description.getText().toString());
             tasks.setPriority(AppConstant.BundleKey.Priority);
-            tasks.setAssignTo(assignTo.getText().toString());
+            tasks.setAssignTo(assignMember);
             tasks.setCreator(email);
             tasks.setDate_of_creator(time);
             tasks.setStatus("In Progress");

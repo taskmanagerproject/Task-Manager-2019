@@ -3,14 +3,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D3D3D3"
+    android:background="#FFF"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Home.view.AllTaskFragment">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_8dp"
+        android:orientation="horizontal"
+        android:clipToPadding="false"
+        android:background="#ADD8E6"
+        app:layout_constraintStart_toStartOf="@id/allTaskRecyView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/consLayoutSortFilter"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_8dp"
+            android:id="@+id/teamNameTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="Team Name:-"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/margin_8dp"
+            android:paddingBottom="@dimen/margin_8dp"
+            android:paddingTop="@dimen/margin_8dp"
+            android:textColor="#000"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/teamNameTextView"
+            android:textStyle="bold"
+            android:id="@+id/nameofTeamInAllTask"
+            android:text="@string/app_name"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="32dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintRight_toLeftOf="@id/sortTextviewAllTask"
+            app:layout_constraintTop_toTopOf="@id/nameofTeamInAllTask"
+            app:layout_constraintBottom_toBottomOf="@id/nameofTeamInAllTask"
+            app:layout_constraintLeft_toRightOf="@id/nameofTeamInAllTask"
+            android:layout_alignParentLeft="true"
+            android:background="#00F">
+
+        </View>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sortTextviewAllTask"
+            app:layout_constraintRight_toLeftOf="@id/filterViewAllTask"
+            app:layout_constraintLeft_toRightOf="@id/nameofTeamInAllTask"
+            android:textColor="#000"
+            app:layout_constraintTop_toTopOf="@id/nameofTeamInAllTask"
+            app:layout_constraintBottom_toBottomOf="@id/nameofTeamInAllTask"
+            android:textSize="16sp"
+            android:paddingLeft="8dp"
+            android:drawableStart="@drawable/sort_img"
+            android:textStyle="bold"
+            android:text="Sort"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/filterViewAllTask"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/sortTextviewAllTask"
+            app:layout_constraintBottom_toBottomOf="@id/sortTextviewAllTask"
+            app:layout_constraintLeft_toRightOf="@id/sortTextviewAllTask"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:drawableStart="@drawable/filter_list"
+            android:paddingRight="@dimen/margin_8dp"
+            android:paddingLeft="8dp"
+            android:textStyle="bold"
+            android:text="Filter"
+            />
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/allTaskRecyView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/consLayoutSortFilter"
         android:padding="@dimen/margin_8dp"
         android:clipToPadding="false"
         >

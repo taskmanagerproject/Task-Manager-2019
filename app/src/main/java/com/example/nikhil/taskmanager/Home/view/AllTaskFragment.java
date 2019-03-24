@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.nikhil.taskmanager.AllTaskAdapter;
 import com.example.nikhil.taskmanager.Constants.AppConstant;
@@ -44,6 +46,7 @@ public class AllTaskFragment extends BaseFragment {
     Button allTaskFragment;
     private RecyclerView mRecyclerView;
     private AllTaskAdapter adapter;
+    TextView teamName,sort,filter;
     private DatabaseReference mDatabase,mTasksDatabase;
     List<Tasks> allTaskList;
 
@@ -59,12 +62,18 @@ public class AllTaskFragment extends BaseFragment {
         mTasksDatabase = mDatabase.child("Tasks");
         allTaskList = new ArrayList<>();
         final List<Tasks> myTaskList = new ArrayList<>();
-        mTasksDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mTasksDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+
+                    new AllTaskAdapter().clearCollection();
+                    if (adapter!=null)
+                        adapter.clearCollection();
+
                     String doc_id = dataSnapshot1.getKey();
                     String teamNameFromSnapshotOfTask = doc_id.substring(doc_id.indexOf("_")+1);
+                    teamName.setText(teamNameFromSnapshotOfTask);
                     Log.d(TAG,"On Data Changed "+dataSnapshot1.getValue().toString());
                     Log.d(TAG,"Team Name value is of pref"+AppConstant.BundleKey.nameOfTeam);
                     Log.d(TAG,"Team Name Value is snap"+teamNameFromSnapshotOfTask);
@@ -80,6 +89,7 @@ public class AllTaskFragment extends BaseFragment {
                         }
                     }
                 }
+                adapter.setAllTaskCollection(allTaskList);
                 adapter = new AllTaskAdapter(getActivity(),allTaskList,AppConstant.BundleKey.EMAIL);
                 mRecyclerView.setAdapter(adapter);
             }
@@ -90,6 +100,7 @@ public class AllTaskFragment extends BaseFragment {
             }
         });
 
+
     }
 
     @Override
@@ -99,6 +110,18 @@ public class AllTaskFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_all_task, container, false);
         mRecyclerView = view.findViewById(R.id.allTaskRecyView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        teamName = view.findViewById(R.id.nameofTeamInAllTask);
+        sort = view.findViewById(R.id.sortTextviewAllTask);
+        sort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View sortView = getLayoutInflater().inflate(R.layout.sort_sheet, null, false);
+                BottomSheetDialog dialog = new BottomSheetDialog(getContext());
+                dialog.setContentView(sortView);
+                dialog.show();
+            }
+        });
+        filter = view.findViewById(R.id.filterViewAllTask);
         DatabaseHelper helper = new DatabaseHelper(getActivity());
         //List<Tasks> data = helper.getAllTasks();
         /*adapter = new AllTaskAdapter(getActivity(),allTaskList,AppConstant.BundleKey.EMAIL);

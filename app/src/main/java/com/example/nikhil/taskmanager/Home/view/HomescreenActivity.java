@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.nikhil.taskmanager.AllTaskAdapter;
 import com.example.nikhil.taskmanager.Constants.AppConstant;
 import com.example.nikhil.taskmanager.R;
 import com.example.nikhil.taskmanager.base.view.BaseActivity;
@@ -64,6 +65,7 @@ public class HomescreenActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putString("teamname",mPreferenceHelper.getString("team_name",""));
         AppConstant.BundleKey.nameOfTeam = mPreferenceHelper.getString("team_name","");
+        new AllTaskAdapter(mPreferenceHelper.getString("team_name",""));
         UsersFragment fragment = new UsersFragment();
         fragment.setArguments(bundle);
         Log.d(TAG,"Status is a "+bundle);
